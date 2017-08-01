@@ -92,13 +92,12 @@ router.post('/data', (req, res, next) => {
   let time = req.body.time || undefined
   let type = req.body.type || undefined
 
-  let regExDate = /^\d{4}-\d{2}-\d{2}$/
   let regExTime = /^\d{2}:\d{2}$/
 
   if (_.isUndefined(date) && _.isUndefined(info) && _.isUndefined(latitude) && _.isUndefined(longitude) && _.isUndefined(time) && _.isUndefined(type)) {
     res.json({ 'msg': 'data format error' })
   }
-  if (date.match(regExDate) === null) {
+  if (!isValidDate(date)) {
     res.json({'msg': 'date format error'})
   }
   if (latitude > 90 || latitude < -90 || !_.isNumber(latitude)) {
@@ -123,17 +122,8 @@ router.post('/data', (req, res, next) => {
   res.json({'msg': 'succese'})
 })
 
-// {
-//   "date": "2017-07-20",
-//   "info": "道路疑似掉落物",
-//   "latitude": 24.120036,
-//   "longitude": 120.674357,
-//   "time": "16:34",
-//   "type": "needFix"
-// }
-
 function isValidDate (dateString) {
-  let regEx = /^\d{4}(-\d{2})?(-\d{2})?$/
+  let regEx = /^\d{4}-\d{2}-\d{2}$/
   return dateString.match(regEx) !== null
 }
 
