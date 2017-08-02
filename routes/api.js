@@ -102,9 +102,13 @@ router.post('/data', (req, res, next) => {
   }
   if (latitude > 90 || latitude < -90 || !_.isNumber(latitude)) {
     res.json({'msg': 'latitude format error'})
+  }else {
+    latitude = parseFloat(latitude , 10)
   }
   if (longitude > 180 || longitude < -180 || !_.isNumber(longitude)) {
     res.json({'msg': 'longitude format error'})
+  }else {
+    latitude = parseFloat(longitude , 10)
   }
   if (time.match(regExTime) === null) {
     res.json({'msg': 'time format error'})
